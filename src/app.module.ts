@@ -8,6 +8,7 @@ import { MedioTransaccion } from './modules/medio_transaccion/entities/medio_tra
 import { ConceptoMovimientoModule } from './modules/concepto_movimiento/concepto_movimiento.module';
 import { ConceptoMovimiento } from './modules/concepto_movimiento/entities/concepto_movimiento.entity';
 import { FondoModule } from './modules/fondo/fondo.module';
+import { MedioTransaccionModule } from './modules/medio_transaccion/medio_transaccion.module';
 
 @Module({
   imports: [
@@ -28,6 +29,8 @@ import { FondoModule } from './modules/fondo/fondo.module';
       MedioTransaccion,
     ]),
     FondoModule,
+    ConceptoMovimientoModule,
+    MedioTransaccionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
