@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFondoDto } from './dto/create-fondo.dto';
 import { UpdateFondoDto } from './dto/update-fondo.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Fondo } from './entities/fondo.entity';
 
 @Injectable()
 export class FondoService {
-  create(createFondoDto: CreateFondoDto) {
-    return 'This action adds a new fondo';
+  constructor(
+    @InjectModel(Fondo)
+    private readonly fondoModel: typeof Fondo
+  ) { }
+
+  create(createFondoDto: Partial<CreateFondoDto>): Promise<Fondo> {
+    return this.fondoModel.create(createFondoDto);
   }
 
-  findAll() {
-    return `This action returns all fondo`;
+  findAll(): Promise<Fondo[]> {
+    return this.fondoModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} fondo`;
+  findOne(id: number): Promise<Fondo | null> {
+    return this.fondoModel.findByPk(id);
   }
 
-  update(id: number, updateFondoDto: UpdateFondoDto) {
-    return `This action updates a #${id} fondo`;
+  async update(id: number, updateFondoDto: UpdateFondoDto): Promise<Fondo | null> {
+    const fondo = await this.fondoModel.findByPk(id);
+    if (!fondo) throw new Error('No se encontró el fondo');
+    return fondo.update(updateFondoDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} fondo`;
+  async remove(id: number) {
+    const fondo = await this.fondoModel.findByPk(id);
+    if (!fondo) {
+      throw new NotFoundException('Fondo no encontrado');
+    }
+
+    await fondo.destroy();
+
+    return {
+      success: true,
+      message: 'Fondo eliminado correctamente',
+    };
   }
 }
