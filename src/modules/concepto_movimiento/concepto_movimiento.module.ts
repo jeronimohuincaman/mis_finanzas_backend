@@ -5,8 +5,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConceptoMovimiento } from './entities/concepto_movimiento.entity';
 
 @Module({
-    imports: [SequelizeModule.forFeature([ConceptoMovimiento])],
+  imports: [SequelizeModule.forFeature([ConceptoMovimiento])],
   controllers: [ConceptoMovimientoController],
   providers: [ConceptoMovimientoService],
 })
-export class ConceptoMovimientoModule {}
+export class ConceptoMovimientoModule { }
