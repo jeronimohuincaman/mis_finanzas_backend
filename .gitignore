@@ -3,6 +3,11 @@
 /node_modules
 /build
 
+# Migrations
+/migrations
+/seeders
+
+
 # Logs
 logs
 *.log
