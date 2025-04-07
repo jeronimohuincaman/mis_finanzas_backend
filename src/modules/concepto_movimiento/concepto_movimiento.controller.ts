@@ -28,7 +28,7 @@ export class ConceptoMovimientoController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.conceptoMovimientoService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.conceptoMovimientoService.remove(+id);
   }
 }
